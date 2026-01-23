@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/remixicon.css">
+    <title>Landing Page Travel | Ges Travel</title>
+
+    
+</head>
+<body>
+
+
+    <!------ SECTION NAVBAR ------>
+    <nav> 
+        <div class="nav_header">
+            <div class="nav_logo">
+                <img class="logo" src="assets/img/logotravell.svg" alt="">
+            </div>
+
+            <div class="nav_menu_btn" id="menu-btn">
+                <span><i class="ri-menu-line"></i></span>
+            </div>
+        </div>
+
+        <ul class="nav_links" id="nav-links">
+            <li><a href="#">Destination</a></li>
+            <li><a href="#">Package</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+
+            <li class="mobile_menu">
+                <button class="btn sign_up">Sign Up</button>
+                <button class="btn sign_in">Sign In</button>
+            </li>
+        
+
+            
+        </ul>
+
+        <button class="mobile_metamask" id="metamaskDesktop" onclick="connectMetamask('metamaskDesktop')">
+            <img class="metamasks" src="assets/img/metamask.svg" alt="">
+            <span>connect</span>
+        </button>
+
+        <div id="dropdownDesktop" class="dropdown">
+           <button id="balanceDesktop" data-action="view-Balance">View Balance</button>
+            <button id="walletDesktop" data-action="view-Wallet">View No Wallet</button>
+            <button id="historyDesktop" data-action="view-History">View History</button>
+            <button id="productsDesktop" data-action="view-Products">View Products</button>
+
+            <hr>
+            <button id="buyDesktop" data-action="buy">Buy</button>
+            <button id="sendDesktop" data-action="send">Send</button>
+            <button id="swapDesktop" data-action="swap">Swap</button>
+
+            <hr>
+            <button id="disconnectDesktop" data-action="disconnect">Disconnect</button>
+        </div>
+
+        <div class="nav_btns">
+            <button class="btn metamask" id="metamaskMobile" onclick="connectMetamask('metamaskMobile')">
+                <img class="metamasks" src="assets/img/metamask.svg" alt="">
+                <span>connect</span>
+            </button>
+
+            <div id="dropdownMobile" class="dropdown">
+                <button id="balanceMobile" data-action="view-Balance">View Balance</button>
+                <button id="walletMobile" data-action="view-Wallet">View No Wallet</button>
+                <button id="historyMobile" data-action="view-History">View History</button>
+                <button id="productsMobile" data-action="view-Products">View Products</button>
+
+                <hr>
+                <button id="buyMobile" data-action="buy">Buy</button>
+                <button id="sendMobile" data-action="send">Send</button>
+                <button id="swapMobile" data-action="swap">Swap</button>
+
+                <hr>
+                <button id="disconnectMobile" data-action="disconnect">Disconnect</button>
+            </div>
+
+            <button class="btn sign_up">Sign Up</button>
+            <button class="btn sign_in">Sign In</button>
+        </div>
+
+    </nav>
+
+    <!----Section Action Landing Page --->
+    <section id="landingContent" class="landing_content">
+        
+        <!------- Wallet Balance Card-------->
+        <div class="landing_balance" id="balanceCard">
+            <h4>Wallet Balance</h4>
+            <p>ETH: <span id="ethBalance">-</span></p>
+            <div class="balance-actions">
+                <button class="refreshbtn" id="refreshBalance">Refresh</button>
+                <button class="closebtn" id="closeBalance">Close</button>
+            </div>
+        </div>
+
+        <!------- Wallet Address Card ---->
+        <div class="landing_balance" id="walletCard">
+            <h4>Wallet Address</h4>
+            <p id="walletAddress">-</p>
+           <div class="balance-actions">
+                <button class="copybtn" id="copyWallet">Copy</button>
+                <button class="closebtn" id="closeWallet">Close</button>
+            </div>
+        </div>
+
+        <!---- Transaction History Card --->
+        <div class="landing_balance" id="historyCard">
+            <h4>Transaction History</h4>
+            <ul id="transactionList">
+            </ul>
+            <div class="balance-actions">
+                <button class="refreshbtn" id="refreshHistory">Refresh</button>
+                <button class="openetherscanbtn" id="openEtherscan">Open in Etherscan</button>
+                <button class="closebtn" id="closeHistory">Close</button>
+            </div>
+        </div>
+
+        <!------- Products Card ------>
+        <div class="landing_balance" id="productsCard">
+            <h4>Products</h4>
+            <ul id="productList">
+            </ul>
+            <div class="balance-actions">
+                <button class="refreshbtn" id="configureProducts">Configure</button>
+                <button class="refreshbtn" id="openEtherscanProducts">Open on Etherscan</button>
+                <button class="refreshbtn" id="refreshProducts" style="display:none">Refresh</button>
+                <button class="refreshbtn" id="buyProducts" style="display:none">Buy</button>
+                <button class="closebtn" id="closeProducts">Close</button>
+            </div>
+        </div>
+    </section>
+
+
+    <!------SECTION DASHBOARD ------>
+    <header class="header_container">
+        <div class="header_image">
+            <div class="header_image_card header_image_card-1">
+                <span> <i class="ri-key-line"></i></span>
+                Hotel Booking
+            </div>
+
+            <div class="header_image_card header_image_card-2">
+                <span> <i class="ri-guide-line"></i> </span> 
+                Tour Guide
+            </div>
+
+            <div class="header_image_card header_image_card-3">
+                <span><i class="ri-map-2-line"></i></span>
+                Destinations
+            </div>
+
+            <div class="header_image_card header_image_card-4">
+                <span><i class="ri-passport-line"></i></span>
+                Flight Tickets
+            </div>
+            
+            <img src="assets/img/people.png" alt="header">
+        </div>
+
+        <div class="header_content">
+            <h1>EXPLORE<br>THE <span>WORLD</span> WITHOUT LIMITS</h1>
+            <p>
+                A simple travel landing page demo designed to showcase a clean layout, modern typography, and a smooth user experience across devices.
+            </p>
+
+            <form action="/">
+                <div class="input_row">
+                    <div class="input_group">
+                        <h5>Search Your Next Adventure</h5>
+                        <div>
+                            <span><i class="ri-map-pin-line"></i></span>
+                            <input type="text" placeholder="Select Destination">
+                        </div>                    
+                    </div>
+                
+
+                    <div class="input_group">
+                        <h5>Date</h5>
+                        <div>
+                            <span><i class="ri-calendar-2-line"></i></span>
+                            <input type="text" placeholder="Select Date">
+                        </div>
+                    </div>
+                </div>
+                <button type="submit">Search</button>
+            </form>
+            <div class="copy">
+                © <span id="year"></span> Gagas. All rights reserved.
+            </div>
+        </div>
+    </header>
+
+    
+    <script src="assets/js/scrollrelavel.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <script src="assets/js/main.js"></script>
+    
+</body>
+</html>

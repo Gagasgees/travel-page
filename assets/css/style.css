@@ -1,0 +1,1001 @@
+@import url("https://fonts.googleapis.com/css2?family=poppins:wght@400;600;700&family=Inter:wght@400;500&display=swap");
+
+
+:root {
+    --primary-color: #85eccd;
+    --primary-color-dark: #1b929b;
+    --text-dark: #353333;
+    --text-light: #767268;
+    --white: #ffffff;
+    --max-width: 1200px;
+    --header-font: 'Poppins', sans-serif;
+    --description-font: 'Inter', sans-serif;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/* Body padding-top hanya diperlukan ketika navbar fixed (layar kecil).
+   Pada layar besar nav di-set static, jadi padding tidak perlu. */
+body {
+    padding-top: 0;
+    font-family: "Poppins", sans-serif;
+}
+
+img {
+    display: flex;
+    width: 100%;
+}
+
+a {
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    isolation: isolate;
+    width: 100%;
+    height: 70px; /* Tetapkan tinggi tetap agar tidak membesar */
+    z-index: 999;
+}
+
+.nav_header  {
+    padding: 0 16px 0 2px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--primary-color);
+}
+
+.nav_logo .logo {
+    height: 150px; /* Kembalikan ukuran logo asli */
+    width: auto;
+}
+
+.nav_menu_btn {
+    font-size: 1.5rem;
+    color: var(--white);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.nav_menu_btn:hover {
+    color: var(--primary-color-dark);
+}
+
+.nav_links {
+    position: absolute;
+    top: 64px;
+    left: 0;
+    width: 100%;
+    padding: 2rem;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 2rem;
+    background-color: var(--primary-color);
+    transition: 0.5s;
+    z-index: -1;
+    transform: translateY(-100%);
+}
+
+.nav_links.open {
+    transform: translateY(0);
+}
+
+.nav_links a {
+    font-weight: 500;
+    color: var(--white);
+}
+
+.nav_links a:hover {
+    color: var(--text-dark);
+}
+
+.nav_links .mobile_menu {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.nav_links .mobile_menu .btn {
+    font-size: 1.1rem;
+    color: var(--white);
+    background-color: var(--primary-color);
+    border: none;
+    transition: 0.5s;
+
+}
+
+.nav_links .mobile_menu .btn:hover {
+    color: var(--text-dark);
+}
+
+.mobile_metamask {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background-color: var(--primary-color);
+    position: absolute;
+    right: 4rem;
+    color: var(--white);
+    font-size: 0.8rem;
+    top: 0.9rem;
+    transition: 0.3s;
+}
+
+.mobile_metamask:hover {
+    color: var(--primary-color-dark);
+}
+
+.mobile_metamask .metamasks {
+    width: 24px;
+    display: block;
+}
+
+.nav_btns {
+    display: none;
+}
+
+.dropdown {
+    position: absolute;
+    top: 90%;
+    left: 80%;
+    transform: translateX(-20%);
+    display: flex; /* Tetap gunakan flex untuk struktur dropdown */
+    flex-direction: column;
+    gap: 0.5rem;
+    background-color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    min-width: 150px;
+    visibility: hidden; /* Awalnya tersembunyi */
+    opacity: 0; /* Awalnya transparan */
+    transition: visibility 0.3s, opacity 0.3s ease;
+}
+
+.dropdown.show {
+    visibility: visible; /* Tampilkan dropdown */
+    opacity: 1; /* Buat dropdown terlihat */
+}
+
+.dropdown button {
+    font-size: 0.8rem;
+    border: none;
+    color: var(--white);
+    background-color: var(--primary-color);
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.dropdown button:hover {
+    color: var(--primary-color-dark);
+}
+
+
+/* MetaMask tooltip shown when hovering the Buy button */
+.meta-tooltip {
+    position: fixed;
+    transform: translate(-50%, -8px);
+    background: var(--primary-color);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .18s ease, transform .18s ease;
+    z-index: 2000;
+}
+.meta-tooltip.visible {
+    opacity: 1;
+    transform: translate(-50%, -12px);
+}
+
+.header_container {
+    max-width: var(--max-width);
+    margin: auto;
+    padding-block: 0.4rem 1rem; /* Lebih rapat lagi terhadap navbar */
+    padding-inline: 1rem;
+    display: grid;
+    gap: 2rem;
+    overflow-x: hidden;
+}
+
+.header_image {
+    position: relative;
+    isolation: isolate;
+}
+
+.header_image::before {
+    position: absolute;
+    content: "";
+    width: 70%;
+    aspect-ratio: 1;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-image: url("../img/map.jpg");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    border-radius: 100%;
+    opacity: 0.5;
+    z-index: -1;
+}
+
+.header_image img {
+    max-width: 420px;
+    margin-inline: auto;
+}
+
+.header_image_card {
+    position: absolute;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    background-color: var(--white);
+    white-space: nowrap;
+    border-radius: 5px;
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.header_image_card span {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.header_image_card-1 {
+    top: 10%;
+    left: 0;
+    transform: translate(40%, 50%);
+}
+
+.header_image_card-2 {
+    bottom: 5%;
+    right: 4rem;
+    transform: translate(-50%);
+}
+
+.header_image_card-3 {
+    top: 65%;
+    left: 0;
+    transform: translate(20%);
+}
+
+.header_image_card-4 {
+    top: 40%;
+    right: 0;
+    transform: translate(-50%);
+}
+
+.header_content h1 {
+    margin-bottom: 1rem;
+    font-size: 5rem;
+    font-weight: 400;
+    font-family: var(--header-font);
+    color: var(--text-dark);
+    line-height: 5.5rem;
+    text-align: center;
+}
+
+.header_content h1 span {
+    color: var(--primary-color);
+}
+
+.header_content p {
+    margin-bottom: 2rem;
+    columns: var(--text-light);
+    line-height: 1.75rem;
+    text-align: center;
+}
+
+.header_content form {
+    margin-bottom: 4rem;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 1rem 0;
+    border-radius: calc(1rem + 10px);
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.header_content .input_row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+}
+
+.header_content .input_group {
+    flex: 1;
+}
+
+.header_content .input_group h5 {
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-light);
+}
+
+.header_content .input_group > div {
+    display: flex;
+    align-items: center;
+    gap : 10px;
+}
+
+.header_content input {
+    width: 100%;
+    outline: none;
+    border: none;
+    font-size: 1rem;
+    background-color: transparent;
+}
+
+.header_content input::placeholder {
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.header_content .input_group span {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.header_content button {
+    width: 100%;
+    padding: 1rem 2rem;
+    outline: none;
+    border: none;
+    font-size: 1rem;
+    white-space: nowrap;
+    color: var(--white);
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.header_content button:hover {
+    background-color: var(--primary-color-dark);
+}
+
+.header_content .copy {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    text-align: center;
+}
+
+
+.landing_content > div {
+    display: none; /* Initially hidden */
+    border: 1px solid var(--primary-color-dark); /* Kurangi ketebalan border */
+    border-radius: 8px;
+    padding: 0.5rem; /* Kurangi padding agar lebih proporsional */
+    margin: 1rem auto 0; /* Tambahkan jarak dari atas dan tengah */
+    max-width: 600px; /* Batasi lebar maksimum konten */
+    width: 50%; /* Pastikan responsif dengan lebar layar */
+    background-color: var(--white);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0;
+    transform: scale(0.95);
+}
+
+.landing_content > div.active {
+    display: block; /* Show when active */
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Style for balance card (hidden by default, shown when active) */
+#balanceCard,
+#walletCard,
+#historyCard,
+#productsCard {
+    display: none; /* Hidden when not active to avoid taking space */
+    border: none; /* Hilangkan border agar lebih bersih */
+    background-color: var(--primary-color); /* Gunakan warna primary */
+    color: var(--white); /* Teks putih agar kontras */
+    padding: 1rem 1.25rem; /* Tambah padding untuk ruang isi */
+    margin: 2rem auto; /* Pusatkan konten secara vertikal dan horizontal */
+    max-width: 600px; /* Batasi lebar maksimum konten */
+    width: 70%; /* Responsif */
+    margin-top: 2rem; /* Jarak dari atas */
+    gap: 1rem; /* Jarak antar isi konten */
+}
+
+#balanceCard h4,
+#balanceCard p,
+#walletCard h4,
+#walletCard p,
+#historyCard h4,
+#historyCard p,
+#productsCard h4,
+#productsCard p {
+    text-align: center;
+    margin: 0;
+}
+
+#balanceCard button,
+#walletCard button,
+#historyCard button,
+#productsCard button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    background-color: var(--white); /* Tombol putih agar terlihat di atas background primary */
+    color: var(--primary-color);
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    align-self: center; /* Pusatkan tombol */
+    min-width: 110px;
+}
+
+#balanceCard button + button,
+#walletCard button + button,
+#historyCard button + button,
+#productsCard button + button {
+    margin-top: 0.5rem; /* Jarak antar tombol jika stacked */
+}
+
+#balanceCard button:hover,
+#walletCard button:hover,
+#historyCard button:hover,
+#productsCard button:hover {
+    background-color: var(--primary-color-dark); /* Hover jadi primary-color-dark */
+    color: var(--white);
+}
+
+/* Spacing dan perataan isi di balance card (hanya digunakan saat aktif via #balanceCard.active) */
+
+#balanceCard h4,
+#walletCard h4,
+#historyCard h4,
+#productsCard h4 {
+    margin: 0 0 1rem 0; /* 1rem di bawah heading */
+}
+
+#balanceCard p,
+#walletCard p {
+    margin: 0 0 1rem 0; /* 1rem di bawah ETH */
+}
+
+#balanceCard .balance-actions,
+#walletCard .balance-actions,
+#historyCard .balance-actions,
+#productsCard .balance-actions {
+    display: flex;
+    gap: 1rem; /* Jarak antar tombol */
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 0.5rem;
+}
+
+/* Products list styling: spacing and left-right layout */
+#productsCard #productList {
+    list-style: none;
+    width: 100%;
+    padding: 0.5rem;
+    margin: 0;
+}
+
+#productsCard #productList li {
+    padding: 0.6rem 0.5rem;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    display: block;
+}
+
+.product-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+    min-height: 48px; /* Pastikan tinggi baris cukup untuk ikon dan teks */
+}
+
+.product-info {
+    text-align: left;
+    flex: 1 1 auto;
+    word-break: break-word; /* jangan potong kata, pindah ke baris baru jika perlu */
+}
+
+/* Token icon sizing to avoid layout overflow */
+.product-info img,
+.product-row img.token-icon {
+    max-height: 36px;
+    width: auto;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.product-actions {
+    flex: 0 0 auto;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+/* Hide the Products heading per user request */
+/* Show the Products heading */
+#productsCard h4 {
+    display: block;
+    margin: 0 0 1rem 0;
+    text-align: center;
+}
+
+/* Tuning heading dan item produk */
+#productsCard h4 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    letter-spacing: 0.2px;
+    text-align: center; /* Center the heading above the list */
+    width: 100%;
+    margin: 0 0 0.6rem 0; /* space between heading and list */
+    position: static; /* keep it above the list, not sticky */
+    z-index: auto;
+}
+
+.product-info strong {
+    display: block;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+.product-desc {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-top: 4px;
+}
+
+.product-actions .btn {
+    padding: 0.35rem 0.6rem;
+    font-size: 0.85rem;
+    border-radius: 6px;
+    min-width: 72px;
+    background-color: var(--white);
+    color: var(--primary-color);
+}
+
+#productsCard #productList li:last-child { padding-bottom: 0.75rem; }
+
+/* Ensure product list sits directly below the heading */
+#productsCard #productList {
+    margin-top: 0;
+}
+
+#balanceCard .balance-actions button,
+#walletCard .balance-actions button,
+#historyCard .balance-actions button,
+#productsCard .balance-actions button {
+    display: inline-block;
+    width: auto;
+    min-width: 110px;
+    margin: 0;
+}
+
+/* Loading indicator for refresh button inside balance card */
+#balanceCard .balance-actions button.loading,
+#walletCard .balance-actions button.loading,
+#productsCard .balance-actions button.loading {
+    color: transparent; /* hide text visually while spinner shows */
+    pointer-events: none;
+}
+
+#balanceCard .balance-actions button.loading::after,
+#walletCard .balance-actions button.loading::after,
+#productsCard .balance-actions button.loading::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(0,0,0,0.15);
+    border-top-color: var(--primary-color-dark);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+#balanceCard.active,
+#walletCard.active,
+#historyCard.active,
+#productsCard.active {
+    display: flex !important; /* Tetap flex saat aktif agar centering terjaga */
+    position: fixed; /* Jadikan overlay di atas konten */
+    top: 82px; /* sedikit turun agar tidak menutupi header gambar */
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    max-width: 480px; /* Lebihkan lebar agar isi tidak terpotong */
+    margin: 0;
+    padding: 0.75rem 0.75rem 0.5rem; /* tambah padding-top untuk memberi ruang heading */
+    max-height: 440px; /* Tinggi lebih untuk menghindari pemotongan konten */
+    overflow: auto; /* Scroll jika isinya lebih banyak */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+/* Transaction list item styling */
+#historyCard #transactionList {
+    list-style: none;
+    width: 100%;
+    padding: 0.25rem 0.5rem;
+}
+
+#historyCard .tx-item {
+    padding: 0.45rem 0.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    width: 100%;
+    text-align: left;
+    font-size: 0.85rem;
+}
+
+#historyCard .tx-item strong { color: #fff; }
+#historyCard .tx-item small { color: rgba(255,255,255,0.85); }
+#historyCard .tx-item a { color: rgba(255,255,255,0.85); text-decoration: underline; }
+
+
+.landing_balance {
+    display: none; /* Sembunyikan secara default */
+}
+
+/* Jangan biarkan .landing_balance.active mengubah layout dokumen; gunakan overlay fixed */
+.landing_balance.active {
+    display: none;
+}
+   
+
+/* Pastikan konten landing (termasuk balance card) tidak tertutup oleh nav fixed */
+#landingContent {
+    margin-top: 0; /* spacing disediakan oleh body padding-top */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center isi konten */
+    gap: 1rem; /* Jarak antar kartu konten */
+}
+
+
+@media (max-width: 480px) {
+    .dropdown {
+        left: 70%;
+    }
+
+    .header_image::before {
+        width: 100%;
+    }
+
+    .header_image_card-1 {
+        left: -4.5rem;
+    }
+
+    .header_image_card-2 {
+        right: -5rem;
+    }
+
+    .header_image_card-3 {
+        left: -2rem;
+    }
+
+    .header_image_card-4 {
+        right: -5.5rem;
+    }
+
+    .header_content {
+        top: 60%;
+    }
+
+    .header_content h1 {
+        font-size: 3rem;
+        line-height: 3.5rem;
+    }
+}
+
+/* Untuk layar kecil (nav fixed), sisakan ruang di atas konten supaya tidak tertutup navbar */
+@media (max-width: 768px) {
+    body {
+        padding-top: calc(70px + 1rem);
+    }
+
+    .header_content h1 {
+        margin-top: 2.5rem;
+    }
+}
+
+
+
+@media (min-width: 769px) { 
+    nav {
+        position: static;
+        padding-block: 1rem 0; /* lebih ringkas agar navbar tidak terlalu tinggi */
+        padding-inline: 1rem;
+        max-width: var(--max-width);
+        margin-inline: auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
+    }
+
+    .nav_header {
+        flex: 1;
+        padding: 0;
+        background-color: transparent;
+    }
+
+    .nav_logo .logo {
+        width: auto;
+        height: 220px;
+        transform: translate(-17%, -5%);
+    }
+
+    .nav_header .nav_menu_btn {
+        display: none;
+    }
+
+   .nav_links {
+        position: static;
+        padding: 0;
+        flex-direction: row;
+        background-color: transparent;
+        transform: none;
+   }
+
+   .nav_links a {
+        padding-block: 2px;
+        color: var(--text-dark);
+        border-bottom: 4px solid transparent;
+   }
+
+   .nav_links a:hover {
+        border-color: var(--primary-color);
+   }
+
+   .nav_links .mobile_menu {
+        display: none;
+   }
+
+    .mobile_metamask {
+        display: none;
+    }
+
+    .nav_btns {
+        display: flex;
+        flex: 1;
+    }
+
+    .nav_btns .btn {
+        padding: 0.45rem 1rem; /* kecilkan tombol supaya muat di satu baris */
+        outline: none;
+        border: none;
+        font-size: 0.8rem;
+        white-space: nowrap;
+        transition: 0.3s;
+        cursor: pointer;
+        border-radius: 10px;
+   }
+
+   .nav_btns .metamask {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+   }
+ 
+   .nav_btns .metamasks {
+        width: 24px;
+        display: block;
+   }
+
+    
+
+    /* Ensure dropdown appears above other content */
+    nav {
+        position: relative; /* Make nav the containing block for dropdown */
+    }
+
+    .nav_btns .dropdown {
+        position: absolute;
+        top: 89%;
+        left: 75%;
+        transform: translateX(-20%);
+        display: flex; /* Tetap gunakan flex untuk struktur dropdown */
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 0.7rem;
+        z-index: 999;
+        min-width: 120px;
+    }
+
+    .nav_btns .dropdown.show {
+        visibility: visible;
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+   .nav_btns button {
+        font-size: 0.8rem;
+        border: none;
+        color: var(--white);
+        background-color: var(--primary-color);
+        transition: 0.3s;
+        cursor: pointer;
+   }
+
+   .nav_btns button:hover {
+        color: var(--primary-color-dark);
+   }
+
+   .sign_up {
+        color: var(--text-dark);
+        background-color: transparent;
+   }
+
+   .sign_up:hover {
+        color: var(--primary-color);
+   }
+
+   .sign_in {
+        color: white;
+   }
+
+   .sign_in:hover {
+        background-color: var(--primary-color);
+   }
+
+   .header_container  {
+        padding-block: 2rem;
+        grid-template-columns: repeat(2, 1fr);
+        align-items: center;
+   }
+
+   .header_image {
+        grid-area: 1/2/2/3;
+   }
+
+   .header_image::before {
+        position: absolute;
+        content: "";
+        width: 100%;
+        aspect-ratio: 1;
+        top: 40%;
+        left: 50%;
+        background-image: url("../img/map.jpg");
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        border-radius: 100%;
+        opacity: 0.5;
+        z-index: -1;
+    }
+
+    .header_image img {
+        max-width: 100%;
+        margin: 0;
+        transform: translateY(-10%);
+    }
+
+    .header_image_card-1 {
+        transform: translate(5%, -10%);
+    }
+
+    .header_image_card-2 {
+        transform: translate(35%, -140%);
+    }
+
+    .header_image_card-3 {
+        transform: translate(10%, -40%);
+    }
+
+    .header_image_card-4 {
+        transform: translate(-5%, -80%);
+    }
+
+
+   .header_content :is(h1, p, .copy) {
+        text-align: left;
+   }
+
+   .header_content h1 {
+        font-size: 3.5rem;
+        line-height: 3.3rem;
+        text-align: center;
+        font-family: var(--header-font);
+        margin-top: -2rem;
+   }
+
+   .header_content .input_row {
+        margin-top: -2rem;
+   }
+
+   .header_content .copy {
+    margin-top: -2rem;
+   }
+   
+}
+
+
+@media (min-width: 1025px) {
+
+    .nav_btns .dropdown {
+        left: 75%;
+        margin-top: 0.9rem;
+    }
+
+    .nav_btns .metamask {
+        margin-right: 2rem;
+    }
+
+    .nav_btns .sign_in,
+    .nav_btns .sign_up {
+        margin-right: 0.5rem;
+    }
+    
+
+    .header_image {
+        margin-top: 2rem;
+    }
+
+    .header_image img {
+        max-width: 90%;
+    }
+
+    .header_content form {
+        flex-direction: row;
+    }
+
+    .header_content button {
+        width: fit-content;
+    }
+
+    .header_content  h1 {
+        font-size: 5rem;
+        line-height: 4rem;
+    }
+}
+
+
+
+
+
+
+
