@@ -259,13 +259,66 @@ function closeDropdowns() {
     });
 }
 
+// Unified dropdown click handler (routes actions for both desktop and mobile)
+function handleDropdownClick(e) {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    const action = btn.dataset && btn.dataset.action;
+    if (!action) return;
+    e.stopPropagation();
+    console.log('[DEBUG] dropdown action=', action);
+
+    switch (action) {
+        case 'view-Balance':
+            fetchAndDisplayBalance();
+            break;
+        case 'view-Wallet':
+            displayWalletAddress();
+            break;
+        case 'view-History':
+            fetchTransactionHistory();
+            break;
+        case 'view-Products':
+            fetchProducts();
+            break;
+        case 'buy':
+        case 'send':
+        case 'swap':
+            openMetaMaskPortfolio();
+            break;
+        case 'disconnect':
+            disconnectWallet();
+            break;
+        default:
+            break;
+    }
+
+    closeDropdowns();
+}
+
+document.getElementById('dropdownDesktop')?.addEventListener('click', handleDropdownClick);
+document.getElementById('dropdownMobile')?.addEventListener('click', handleDropdownClick);
+
+// Ensure overlay cards are shown above any stacking contexts by
+// moving them to document.body before activating.
+function showOverlayById(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    try {
+        if (el.parentElement !== document.body) document.body.appendChild(el);
+    } catch (e) {
+        // ignore if append fails for any reason
+    }
+    el.classList.add('active');
+}
+
 // Show message using existing wallet card when wallet not connected
 function showNoWalletPrompt() {
     const walletAddrEl = document.getElementById('walletAddress');
     const walletCard = document.getElementById('walletCard');
     if (walletAddrEl && walletCard) {
         walletAddrEl.textContent = 'Please connect your MetaMask wallet first.';
-        walletCard.classList.add('active');
+        showOverlayById('walletCard');
     } else {
         alert('Please connect your MetaMask wallet first.');
     }
@@ -304,7 +357,7 @@ async function fetchAndDisplayBalance() {
         // Ensure the balance card is visible
         const balanceCard = document.getElementById("balanceCard");
         if (balanceCard) {
-            balanceCard.classList.add("active");
+            showOverlayById('balanceCard');
             console.log("Balance card displayed"); // Debugging log
         } else {
             console.error("Balance card element not found");
@@ -331,7 +384,7 @@ function displayWalletAddress() {
     const walletAddrEl = document.getElementById("walletAddress");
     const walletCard = document.getElementById("walletCard");
     if (walletAddrEl) walletAddrEl.textContent = walletAddress;
-    if (walletCard) walletCard.classList.add('active');
+    if (walletCard) showOverlayById('walletCard');
 }
 
 // Etherscan API key storage helpers
@@ -363,7 +416,7 @@ async function fetchTransactionHistory() {
             transactionList.appendChild(li);
         }
         const historyCard = document.getElementById('historyCard');
-        if (historyCard) historyCard.classList.add('active');
+        if (historyCard) showOverlayById('historyCard');
         return;
     }
 
@@ -453,7 +506,7 @@ async function fetchTransactionHistory() {
 
         // show history card
         const historyCard = document.getElementById('historyCard');
-        if (historyCard) historyCard.classList.add('active');
+        if (historyCard) showOverlayById('historyCard');
 
     } catch (error) {
         console.error('Error fetching transaction history:', error);
@@ -667,7 +720,7 @@ async function fetchLocalProducts(trackedTokenContracts = [], trackedNftContract
     }
 
     const productsCard = document.getElementById('productsCard');
-    if (productsCard) productsCard.classList.add('active');
+    if (productsCard) showOverlayById('productsCard');
 }
 
 // Prompt user to configure tracked contracts and save order to localStorage
@@ -947,7 +1000,7 @@ function viewProduct(product) {
 
     // show product card
     const productsCard = document.getElementById('productsCard');
-    if (productsCard) productsCard.classList.add('active');
+    if (productsCard) showOverlayById('productsCard');
 
     // surface wallet info in other cards as well
     if (isConnected) {
