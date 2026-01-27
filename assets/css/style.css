@@ -753,11 +753,12 @@ nav {
         left: auto;
         right: auto;
         bottom: auto;
-        width: 90%;
+        width: 100%;
         box-sizing: border-box;
         padding: 0.75rem 1rem;
         white-space: normal;
         justify-self: center;
+        min-width: 0;
     }
 
     .header_image_card-1 { grid-row: 2; grid-column: 1; }
@@ -773,6 +774,10 @@ nav {
     .header_content h1 {
         font-size: 3rem;
         line-height: 3.5rem;
+    }
+
+    .input_group input {
+        font-size: 12px;
     }
 }
 
