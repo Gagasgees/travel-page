@@ -21,5 +21,5 @@ This project was created as a portfolio project and frontend practice.
 
 ------
 
-## 🔗 Web3 Service (Optional)
+## 🔗 Web3 Service
 This landing page can also be adopted for web3 projects such as crypto startups, NFTs, and DAos, including MetaMask wallet-related UI components and crypto-ready layouts.
